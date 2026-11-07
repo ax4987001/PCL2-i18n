@@ -124,13 +124,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="..\PCL\Lang\*.json">
-      <Link>PCL\Lang\%(Filename)%(Extension)</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="My Project\Resources.Designer.vb">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
