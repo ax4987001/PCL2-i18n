@@ -156,10 +156,7 @@
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Text_Language}" Margin="0,0,25,0" />
-                        <local:MyComboBox x:Name="ComboUiLanguage" local:SettingService.Key="UiLanguage" HorizontalAlignment="Left" Width="170" Grid.Column="1">
-                            <local:MyComboBoxItem Content="简体中文" />
-                            <local:MyComboBoxItem Content="English" />
-                        </local:MyComboBox>
+                        <local:MyComboBox x:Name="ComboUiLanguage" local:SettingService.Key="UiLanguage" HorizontalAlignment="Left" Width="170" Grid.Column="1" />
                     </Grid>
                 </StackPanel>
             </local:MyCard>

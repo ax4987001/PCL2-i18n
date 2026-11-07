@@ -442,10 +442,6 @@ Public Class FormMain
             End Try
             '上报
             Telemetry(I18n.GetString("FormMain.TelemetryStart"))
-            '开源版本提示
-            If VersionBranchMain = "OpenSource" Then
-                MyMsgBox(I18n.GetString("FormMain.HintOpenSource").Replace("%1%", vbCrLf), I18n.GetString("FormMain.HintOpenSourceTitle"))
-            End If
         End Sub, "初始化", ThreadPriority.Lowest)
 
         Logger.Info($"第三阶段加载用时：{GetTimeMs() - ApplicationStartTick} ms")

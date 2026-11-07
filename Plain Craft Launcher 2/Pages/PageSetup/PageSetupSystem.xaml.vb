@@ -2,7 +2,13 @@ Public Class PageSetupSystem
 
 
     Private Sub PageSetupSystem_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
-
+        ' 动态绑定语言列表
+        ComboUiLanguage.Items.Clear()
+        For Each lang In I18n.AvailableLangs
+            Dim item As New MyComboBoxItem With {.Content = lang}
+            ComboUiLanguage.Items.Add(item)
+        Next
+        
         '重复加载部分
         PanBack.ScrollToHome()
 
