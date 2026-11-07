@@ -24,22 +24,16 @@ jobs:
       with:
         dotnet-version: '8.0.x'
 
-    - name: Add msbuild to PATH
+    - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
 
-    - name: Setup VB.NET environment
-      run: |
-        dotnet workload install maui-desktop || echo "Skipping maui"
-        dotnet workload install desktop || echo "Skipping desktop"
-
     - name: Setup NuGet
-      uses: NuGet/setup-nuget@v2
+      uses: NuGet/setup-nuget@v3
 
     - name: Restore dependencies
       run: |
         nuget restore "Plain Craft Launcher 2.sln"
-        dotnet restore PCLCS\PCLCS.csproj
-        dotnet restore "Plain Craft Launcher 2\Plain Craft Launcher 2.vbproj"
+        dotnet restore "Plain Craft Launcher 2.sln"
 
     - name: Build Solution
       run: dotnet build "Plain Craft Launcher 2.sln" -c Release -p:Platform="Any CPU"
