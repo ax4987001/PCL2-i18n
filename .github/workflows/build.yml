@@ -27,6 +27,11 @@ jobs:
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v2
 
+    - name: Setup VB.NET environment
+      run: |
+        dotnet workload install maui-desktop || echo "Skipping maui"
+        dotnet workload install desktop || echo "Skipping desktop"
+
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v2
 
@@ -36,21 +41,11 @@ jobs:
         dotnet restore PCLCS\PCLCS.csproj
         dotnet restore "Plain Craft Launcher 2\Plain Craft Launcher 2.vbproj"
 
-    - name: Get Git Hash
-      id: vars
-      shell: bash
-      run: |
-        echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-
-    - name: Inject Commit Hash
-      run: |
-        (Get-Content "Plain Craft Launcher 2\Modules\Base\ModBase.vb") -replace 'Public Const CommitHash As String = ""', 'Public Const CommitHash As String = "${{ steps.vars.outputs.sha_short }}"' | Set-Content "Plain Craft Launcher 2\Modules\Base\ModBase.vb"
-
     - name: Build Solution
-      run: msbuild "Plain Craft Launcher 2.sln" /p:Configuration=Release /p:Platform="Any CPU" /m:1
+      run: dotnet build "Plain Craft Launcher 2.sln" -c Release -p:Platform="Any CPU"
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: PCL2-i18n-Release-${{ steps.vars.outputs.sha_short }}
+        name: PCL2-i18n-Release
         path: build/Plain Craft Launcher 2.exe
