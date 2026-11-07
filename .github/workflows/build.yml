@@ -22,7 +22,9 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '8.0.x'
+        dotnet-version: |
+          8.0.x
+          4.8.x
 
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
@@ -36,7 +38,7 @@ jobs:
         dotnet restore "Plain Craft Launcher 2.sln"
 
     - name: Build Solution
-      run: dotnet build "Plain Craft Launcher 2.sln" -c Release -p:Platform="Any CPU"
+      run: msbuild "Plain Craft Launcher 2.sln" /p:Configuration=Release /p:Platform="Any CPU" /m:1
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
