@@ -49,6 +49,10 @@ jobs:
       shell: bash
       run: echo "tag_name=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
 
+    - name: Compress to ZIP
+      shell: powershell
+      run: Compress-Archive -Path "build\Plain Craft Launcher 2.exe" -DestinationPath "build\PCL2-i18n.zip"
+
     - name: Create Release
       uses: softprops/action-gh-release@v2
       with:
@@ -56,6 +60,6 @@ jobs:
         tag_name: ${{ steps.get_tag.outputs.tag_name }}
         draft: false
         prerelease: false
-        files: build/Plain Craft Launcher 2.exe
+        files: build/PCL2-i18n.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
