@@ -46,10 +46,10 @@ jobs:
         (Get-Content "Plain Craft Launcher 2\Modules\Base\ModBase.vb") -replace 'Public Const CommitHash As String = ""', 'Public Const CommitHash As String = "${{ steps.vars.outputs.sha_short }}"' | Set-Content "Plain Craft Launcher 2\Modules\Base\ModBase.vb"
 
     - name: Build Solution
-      run: msbuild "Plain Craft Launcher 2\Plain Craft Launcher 2.vbproj" -p:Configuration=Release -m:1
+      run: msbuild "Plain Craft Launcher 2.sln" -p:Configuration=Release -m:1
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
         name: PCL2-i18n-Release-${{ steps.vars.outputs.sha_short }}
-        path: Plain Craft Launcher 2\obj\Release\Plain Craft Launcher 2.exe
+        path: build/Plain Craft Launcher 2.exe
