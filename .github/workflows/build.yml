@@ -2,9 +2,8 @@ name: Build PCL2-i18n
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    tags:
+      - 'v*'
   workflow_dispatch:
 
 jobs:
@@ -43,8 +42,18 @@ jobs:
     - name: Build Solution
       run: dotnet build "Plain Craft Launcher 2.sln" -c Release -p:Platform="Any CPU"
 
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v4
+    - name: Get Tag Name
+      id: get_tag
+      shell: bash
+      run: echo "tag_name=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v2
       with:
-        name: PCL2-i18n-Release
-        path: build/Plain Craft Launcher 2.exe
+        name: Release ${{ steps.get_tag.outputs.tag_name }}
+        tag_name: ${{ steps.get_tag.outputs.tag_name }}
+        draft: false
+        prerelease: false
+        files: build/Plain Craft Launcher 2.exe
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
