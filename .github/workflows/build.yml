@@ -27,6 +27,10 @@ jobs:
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
 
+    - name: Ensure VisualBasic is available
+      run: |
+        dotnet add "Plain Craft Launcher 2\Plain Craft Launcher 2.vbproj" package Microsoft.VisualBasic -v 10.3.0 || echo "Package exists or failed"
+
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v3
 
@@ -37,7 +41,7 @@ jobs:
         dotnet restore "Plain Craft Launcher 2\Plain Craft Launcher 2.vbproj"
 
     - name: Build Solution
-      run: msbuild "Plain Craft Launcher 2.sln" /p:Configuration=Release /p:Platform="Any CPU" /p:PublishReadyToRun=false /m:1
+      run: dotnet build "Plain Craft Launcher 2.sln" -c Release -p:Platform="Any CPU"
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
