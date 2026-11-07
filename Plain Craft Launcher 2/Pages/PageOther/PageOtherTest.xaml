@@ -1,0 +1,46 @@
+<local:MyPageRight x:Class="PageOtherTest"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:local="clr-namespace:PCL"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    PanScroll="PanBack">
+    <local:MyScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" x:Name="PanBack">
+        <StackPanel Margin="25,10">
+            <!-- 百宝箱卡片 -->
+            <local:MyCard Title="{DynamicResource PageOtherTest.CardBox}" Margin="0,15,0,15">
+                <StackPanel Margin="20,40,20,15">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,0" HorizontalAlignment="Center">
+                        <local:MyButton Text="{DynamicResource PageOtherTest.BtnClear}" Margin="0,0,25,0" Width="150" Height="35" Click="RubbishClear_Click" />
+                        <local:MyButton Text="{DynamicResource PageOtherTest.BtnOpt}" Margin="0,0,0,0" Width="150" Height="35" Click="MemoryOptimize_Click" />
+                    </StackPanel>
+                </StackPanel>
+            </local:MyCard>
+
+            <!-- 下载自定义文件卡片 -->
+            <local:MyCard Title="{DynamicResource PageOtherTest.CardDownload}" Margin="0,0,0,15">
+                <StackPanel Margin="20,40,20,15">
+                    
+                    <local:MyTextBox x:Name="TextUrl" HintText="{DynamicResource PageOtherTest.HintUrl}" Margin="0,0,0,15" Height="35" />
+                    
+                    <Grid Margin="0,0,0,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <local:MyTextBox Grid.Column="0" x:Name="TextFolder" HintText="{DynamicResource PageOtherTest.HintFolder}" Margin="0,0,10,0" Height="35" />
+                        <local:MyButton Grid.Column="1" Text="{DynamicResource PageOtherTest.BtnBrowse}" Width="80" Height="35" Click="BrowseFolder_Click" />
+                    </Grid>
+
+                    <local:MyTextBox x:Name="TextFileName" HintText="{DynamicResource PageOtherTest.HintFile}" Text="downloaded_file.zip" Margin="0,0,0,20" Height="35" />
+                    
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <local:MyButton Text="{DynamicResource PageOtherTest.BtnDownload}" Margin="0,0,25,0" Width="150" Height="35" Click="DownloadCustom_Click" />
+                        <local:MyButton Text="{DynamicResource PageOtherTest.BtnOpen}" Width="150" Height="35" Click="OpenFolder_Click" />
+                    </StackPanel>
+                </StackPanel>
+            </local:MyCard>
+        </StackPanel>
+    </local:MyScrollViewer>
+</local:MyPageRight>

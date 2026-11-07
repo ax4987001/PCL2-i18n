@@ -1,0 +1,88 @@
+<local:MyPageRight
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:PCL" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:System="clr-namespace:System;assembly=mscorlib" 
+    mc:Ignorable="d" x:Class="PageInstanceOverall"
+    PanScroll="PanBack" Grid.IsSharedSizeScope="True">
+    <local:MyScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" x:Name="PanBack">
+        <StackPanel x:Name="PanMain" Margin="25,10">
+            <local:MyCard Margin="0,15" Title="">
+                <Grid Margin="10,7" Name="PanDisplayItem" />
+            </local:MyCard>
+            <local:MyCard Margin="0,0,0,15" Title="{DynamicResource InstanceOverall.TitleDisplay}" x:Name="PanDisplay">
+                <StackPanel Margin="25,40,25,15">
+                    <Grid x:Name="PanDisplayIcon" HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Name" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="9" />
+                            <RowDefinition Height="28" />
+                        </Grid.RowDefinitions>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource InstanceOverall.LabelIcon}" Margin="0,0,25,0" />
+                        <local:MyComboBox Grid.Column="1" x:Name="ComboDisplayLogo">
+                            <local:MyComboBoxItem Content="{DynamicResource InstanceOverall.ItemAuto}" IsSelected="True" Tag="" />
+                            <local:MyComboBoxItem Content="{DynamicResource InstanceOverall.ItemCustom}" x:Name="ItemDisplayLogoCustom" Tag="PCL\Logo.png" />
+                            <local:MyComboBoxItem Content="{DynamicResource InstanceOverall.LogoCobblestone}" Tag="pack://application:,,,/images/Blocks/CobbleStone.png" />
+                            <local:MyComboBoxItem Content="{DynamicResource InstanceOverall.LogoCommandBlock}" Tag="pack://application:,,,/images/Blocks/CommandBlock.png" />
+                            <local:MyComboBoxItem Content="{DynamicResource InstanceOverall.LogoGoldBlock}" Tag="pack://application:,,,/images/Blocks/GoldBlock.png" />
+                            <local:MyComboBoxItem Content="{DynamicResource InstanceOverall.LogoGrass}" Tag="pack://application:,,,/images/Blocks/Grass.png" />
+                            <local:MyComboBoxItem Content="{DynamicResource InstanceOverall.LogoGrassPath}" Tag="pack://application:,,,/images/Blocks/GrassPath.png" />
+                            <local:MyComboBoxItem Content="{DynamicResource InstanceOverall.LogoAnvil}" Tag="pack://application:,,,/images/Blocks/Anvil.png" />
+                            <local:MyComboBoxItem Content="{DynamicResource InstanceOverall.LogoRedstoneBlock}" Tag="pack://application:,,,/images/Blocks/RedstoneBlock.png" />
+                            <local:MyComboBoxItem Content="{DynamicResource InstanceOverall.LogoRedstoneLampOn}" Tag="pack://application:,,,/images/Blocks/RedstoneLampOn.png" />
+                            <local:MyComboBoxItem Content="{DynamicResource InstanceOverall.LogoRedstoneLampOff}" Tag="pack://application:,,,/images/Blocks/RedstoneLampOff.png" />
+                            <local:MyComboBoxItem Content="{DynamicResource InstanceOverall.LogoEgg}" Tag="pack://application:,,,/images/Blocks/Egg.png" />
+                            <local:MyComboBoxItem Content="{DynamicResource InstanceOverall.LogoFabric}" Tag="pack://application:,,,/images/Blocks/Fabric.png" />
+                            <local:MyComboBoxItem Content="{DynamicResource InstanceOverall.LogoNeoForge}" Tag="pack://application:,,,/images/Blocks/NeoForge.png" />
+                        </local:MyComboBox>
+                        <TextBlock VerticalAlignment="Center" Grid.Row="2" HorizontalAlignment="Left" Text="{DynamicResource InstanceOverall.LabelCategory}" Margin="0,0,25,0" />
+                        <local:MyComboBox Grid.Column="1" Grid.Row="2" x:Name="ComboDisplayType">
+                            <local:MyComboBoxItem Content="{DynamicResource InstanceOverall.ItemAuto}" IsSelected="True" />
+                            <local:MyComboBoxItem Content="{DynamicResource InstanceOverall.ItemHidden}" ToolTip="{DynamicResource InstanceOverall.ItemHiddenTip}" />
+                            <local:MyComboBoxItem Content="{DynamicResource InstanceOverall.ItemMod}" />
+                            <local:MyComboBoxItem Content="{DynamicResource InstanceOverall.ItemNormal}" />
+                            <local:MyComboBoxItem Content="{DynamicResource InstanceOverall.ItemRare}" />
+                            <local:MyComboBoxItem Content="{DynamicResource InstanceOverall.ItemAprilFool}" />
+                        </local:MyComboBox>
+                    </Grid>
+                    <Grid Margin="0,15,0,7" Height="35">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                        </Grid.ColumnDefinitions>
+                        <local:MyButton x:Name="BtnDisplayRename" Text="{DynamicResource InstanceOverall.BtnRename}" MinWidth="140" Padding="13,0" Margin="0,0,20,0" />
+                        <local:MyButton x:Name="BtnDisplayDesc" Text="{DynamicResource InstanceOverall.BtnDesc}" MinWidth="140" Padding="13,0" Margin="0,0,20,0" Grid.Column="1" />
+                        <local:MyButton x:Name="BtnDisplayStar" Text="{DynamicResource InstanceOverall.BtnStar}" MinWidth="140" Padding="13,0" Margin="0,0,20,0" Grid.Column="2" />
+                    </Grid>
+                </StackPanel>
+            </local:MyCard>
+            <local:MyCard Margin="0,0,0,15" Title="{DynamicResource InstanceOverall.TitleFolder}" x:Name="PanFolder">
+                <WrapPanel Margin="25,30,25,20">
+                    <local:MyButton x:Name="BtnFolderVersion" Text="{DynamicResource InstanceOverall.BtnFolderVersion}" MinWidth="140" Padding="13,0" Margin="0,13,20,0" Height="35" />
+                    <local:MyButton x:Name="BtnFolderSaves" Text="{DynamicResource InstanceOverall.BtnFolderSaves}" MinWidth="140" Padding="13,0" Margin="0,13,20,0" Height="35"/>
+                    <local:MyButton x:Name="BtnFolderMods" Text="{DynamicResource InstanceOverall.BtnFolderMods}" MinWidth="140" Padding="13,0" Margin="0,13,20,0" Height="35"/>
+                    <local:MyButton x:Name="BtnFolderScreen" Text="{DynamicResource InstanceOverall.BtnFolderScreen}" MinWidth="140" Padding="13,0" Margin="0,13,20,0" Height="35" />
+                </WrapPanel>
+            </local:MyCard>
+            <local:MyCard Margin="0,0,0,15" Title="{DynamicResource InstanceOverall.TitleManage}" x:Name="PanManage">
+                <StackPanel Margin="25,40,25,15">
+                    <Grid Margin="0,2,0,7" Height="35">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                        </Grid.ColumnDefinitions>
+                        <local:MyButton x:Name="BtnManageScript" Text="{DynamicResource InstanceOverall.BtnScript}" MinWidth="140" Padding="13,0" Margin="0,0,20,0" />
+                        <local:MyButton x:Name="BtnManageCheck" Text="{DynamicResource InstanceOverall.BtnCheck}" MinWidth="140" Padding="13,0" Margin="0,0,20,0" Grid.Column="1" ToolTip="{DynamicResource InstanceOverall.BtnCheckTip}" />
+                        <local:MyButton x:Name="BtnManageDelete" Text="{DynamicResource InstanceOverall.BtnDelete}" MinWidth="140" Padding="13,0" Margin="0,0,20,0" Grid.Column="2" ColorType="Red" />
+                    </Grid>
+                </StackPanel>
+            </local:MyCard>
+        </StackPanel>
+    </local:MyScrollViewer>
+</local:MyPageRight>

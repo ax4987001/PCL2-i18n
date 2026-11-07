@@ -1,0 +1,36 @@
+<local:MyPageRight
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:PCL" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    mc:Ignorable="d" x:Class="PageDownloadMod"
+    PanScroll="Content">
+    <local:PageResource x:Name="Content" PageType="Mod">
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadMod.All}" Tag="" IsSelected="True" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadMod.Worldgen}" Tag="406/worldgen" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadMod.Biome}" Tag="407/" Margin="15,0,0,0" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadMod.Dimension}" Tag="410/" Margin="15,0,0,0" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadMod.Ore}" Tag="408/" Margin="15,0,0,0" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadMod.Structure}" Tag="409/" Margin="15,0,0,0" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadMod.Tech}" Tag="412/technology" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadMod.Pipe}" Tag="415/" Margin="15,0,0,0" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadMod.Auto}" Tag="4843/" Margin="15,0,0,0" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadMod.Energy}" Tag="417/" Margin="15,0,0,0" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadMod.Redstone}" Tag="4558/" Margin="15,0,0,0" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadMod.Food}" Tag="436/food" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadMod.Agri}" Tag="416/" Margin="15,0,0,0" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadMod.Mech}" Tag="/game-mechanics" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadMod.Trans}" Tag="414/transportation" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadMod.Storage}" Tag="420/storage" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadMod.Magic}" Tag="419/magic" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadMod.Adv}" Tag="422/adventure" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadMod.Deco}" Tag="424/decoration" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadMod.Mob}" Tag="411/mobs" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadMod.Util}" Tag="5191/utility" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadMod.Equip}" Tag="434/equipment" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadMod.Creative}" Tag="9026/" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadMod.Opt}" Tag="6814/optimization" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadMod.Info}" Tag="423/" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadMod.Server}" Tag="435/social" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadMod.Lib}" Tag="421/library" />
+    </local:PageResource>
+</local:MyPageRight>

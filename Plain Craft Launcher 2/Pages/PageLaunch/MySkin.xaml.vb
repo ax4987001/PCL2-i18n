@@ -1,0 +1,313 @@
+Public Class MySkin
+
+    '事件
+    Public Event Click(sender As Object, e As MouseButtonEventArgs)
+
+    '皮肤储存
+    Private _Address As String
+    Public Property Address As String
+        Get
+            Return _Address
+        End Get
+        Set(value As String)
+            _Address = value
+            ToolTip = If(_Address = "", I18n.GetString("Skin.ToolLoading"), I18n.GetString("Skin.ToolLoaded"))
+        End Set
+    End Property
+    Public Loader As LoaderTask(Of (String, String), String)
+
+    '控件动画
+    Private Sub PanSkin_MouseEnter(sender As Object, e As MouseEventArgs) Handles Me.MouseEnter
+        AniStart(AaOpacity(ShadowSkin, 0.8 - ShadowSkin.Opacity, 200, 100), "Skin Shadow")
+    End Sub
+    Private Sub PanSkin_MouseLeave(sender As Object, e As MouseEventArgs) Handles Me.MouseLeave
+        AniStart(AaOpacity(ShadowSkin, 0.2 - ShadowSkin.Opacity, 200), "Skin Shadow")
+        IsSkinMouseDown = False
+        AniStart(AaScaleTransform(Me, 1 - CType(Me.RenderTransform, ScaleTransform).ScaleX, 60,, New AniEaseOutFluent), "Skin Scale")
+    End Sub
+
+    '点击
+    Private IsSkinMouseDown As Boolean = False
+    Private Sub PanSkin_MouseLeftButtonDown(sender As Object, e As MouseButtonEventArgs) Handles Me.MouseLeftButtonDown
+        IsSkinMouseDown = True
+        AniStart(AaScaleTransform(Me, 0.9 - CType(Me.RenderTransform, ScaleTransform).ScaleX, 60,, New AniEaseOutFluent), "Skin Scale")
+    End Sub
+    Private Sub PanSkin_MouseLeftButtonUp(sender As Object, e As MouseButtonEventArgs) Handles Me.MouseLeftButtonUp
+        AniStart(AaScaleTransform(Me, 1 - CType(Me.RenderTransform, ScaleTransform).ScaleX, 60,, New AniEaseOutFluent), "Skin Scale")
+        If IsSkinMouseDown Then
+            IsSkinMouseDown = False
+            RaiseEvent Click(sender, e)
+        End If
+    End Sub
+
+    '保存皮肤
+    Public Sub BtnSkinSave_Click() Handles BtnSkinSave.Click
+        Save(Loader)
+    End Sub
+    Public Shared Sub Save(Loader As LoaderTask(Of (String, String), String))
+        Dim Address = Loader.Output
+        If Not Loader.State = LoadState.Finished Then
+            Hint(I18n.GetString("Skin.HintLoading"), HintType.Red)
+            If Not Loader.State = LoadState.Loading Then Loader.Start()
+            Return
+        End If
+        Try
+            Dim FileAddress As String = Dialogs.SaveFile(I18n.GetString("Skin.DialogSave"), PathUtils.GetLastPart(Address), filter:={("png", I18n.GetString("Skin.DialogFilter"))})
+            If FileAddress Is Nothing Then Return
+            If FileAddress.Contains("\") Then
+                FileUtils.Delete(FileAddress)
+                If Address.StartsWithF(PathImage) Then
+                    Dim Image As New MyBitmap(Address)
+                    Image.Save(FileAddress)
+                Else
+                    FileUtils.Copy(Address, FileAddress)
+                End If
+                Hint(I18n.GetString("Skin.HintSaveSuccess"), HintType.Green)
+            End If
+        Catch ex As Exception
+            Logger.Error(ex, "保存皮肤失败", LogBehavior.Toast)
+        End Try
+    End Sub
+    Private Sub BtnSkinSave_Checked(sender As MyMenuItem, e As RoutedEventArgs) Handles BtnSkinSave.Checked
+        sender.IsEnabled = Address = ""
+    End Sub
+
+    ''' <summary>
+    ''' 载入皮肤。
+    ''' </summary>
+    Public Sub Load()
+        Try
+            '检查文件存在
+            Address = Loader.Output
+            If String.IsNullOrEmpty(Address) Then Throw New Exception(I18n.GetString("Skin.ErrNoOutput").Replace("%1%", Loader.Name))
+            If Not Address.StartsWithF(PathImage) AndAlso Not FileUtils.Exists(Address) Then Throw New FileNotFoundException(I18n.GetString("Skin.ErrNotFound"), Address)
+            '加载
+            Dim Image As MyBitmap
+            Try
+                Image = New MyBitmap(Address)
+            Catch ex As Exception '#2272
+                Logger.Error(ex, $"皮肤文件已损坏：{Address}", LogBehavior.Toast)
+                FileUtils.Delete(Address)
+                Return
+            End Try
+            ImgBack.Tag = Address
+            '大小检查
+            Dim Scale As Integer = Image.Pic.Width / 64
+            If Image.Pic.Width < 32 OrElse Image.Pic.Height < 32 Then
+                ImgFore.Source = Nothing : ImgBack.Source = Nothing
+                Throw New Exception(I18n.GetString("Skin.ErrSize").Replace("%1%", Image.Pic.Height).Replace("%2%", Image.Pic.Width))
+            End If
+            '头发层（附加层）
+            If Image.Pic.Width >= 64 AndAlso Image.Pic.Height >= 32 Then
+                If (Image.Pic.GetPixel(1, 1).A = 0 OrElse '如果图片中有任何透明像素（避免纯色白底）
+                    Image.Pic.GetPixel(Image.Pic.Width - 1, Image.Pic.Height - 1).A = 0 OrElse
+                    Image.Pic.GetPixel(Image.Pic.Width - 2, Image.Pic.Height / 2 - 2).A = 0) OrElse
+                   (Image.Pic.GetPixel(1, 1) <> Image.Pic.GetPixel(Scale * 41, Scale * 9) AndAlso '或是头部颜色和透明区均不一样
+                    Image.Pic.GetPixel(Image.Pic.Width - 1, Image.Pic.Height - 1) <> Image.Pic.GetPixel(Scale * 41, Scale * 9) AndAlso
+                    Image.Pic.GetPixel(Image.Pic.Width - 2, Image.Pic.Height / 2 - 2) <> Image.Pic.GetPixel(Scale * 41, Scale * 9)) Then
+                    ImgFore.Source = Image.Clip(Scale * 40, Scale * 8, Scale * 8, Scale * 8)
+                Else
+                    ImgFore.Source = Nothing
+                End If
+            Else
+                ImgFore.Source = Nothing
+            End If
+            '脸层
+            ImgBack.Source = Image.Clip(Scale * 8, Scale * 8, Scale * 8, Scale * 8)
+            Logger.Info($"载入头像成功：{Loader.Name}")
+        Catch ex As Exception
+            Logger.Error(ex, $"载入头像失败（{If(Address, "null")},{Loader.Name}）", LogBehavior.Toast)
+        End Try
+    End Sub
+    ''' <summary>
+    ''' 清空皮肤。
+    ''' </summary>
+    Public Sub Clear()
+        Address = ""
+        ImgFore.Source = Nothing
+        ImgBack.Source = Nothing
+    End Sub
+
+    '刷新缓存
+    Public Sub RefreshClick() Handles BtnSkinRefresh.Click
+        RefreshCache(Loader)
+    End Sub
+    ''' <summary>
+    ''' 刷新皮肤缓存。
+    ''' </summary>
+    Public Shared Sub RefreshCache(Optional sender As LoaderTask(Of (String, String), String) = Nothing)
+        Dim HasLoaderRunning As Boolean = False
+        For Each SkinLoader In PageLaunchLeft.SkinLoaders
+            If SkinLoader.State = LoadState.Loading Then
+                HasLoaderRunning = True : Exit For
+            End If
+        Next
+        If FrmLaunchLeft IsNot Nothing AndAlso HasLoaderRunning Then
+            '由于取消不是实时的，暂时不会释放文件，会导致删除报错，故只能取消执行
+            Hint(I18n.GetString("Skin.HintBusy"), HintType.Blue)
+        Else
+            RunInThread(
+            Sub()
+                Try
+                    Hint(I18n.GetString("Skin.HintRefreshing"))
+                    '清空缓存
+                    Logger.Info("正在清空皮肤缓存")
+                    If DirectoryUtils.Exists(PathTemp & "Cache\Skin") Then DirectoryUtils.Delete(PathTemp & "Cache\Skin")
+                    If DirectoryUtils.Exists(PathTemp & "Cache\Uuid") Then DirectoryUtils.Delete(PathTemp & "Cache\Uuid")
+                    IniClearCache(PathTemp & "Cache\Skin\IndexMs.ini")
+                    IniClearCache(PathTemp & "Cache\Skin\IndexNide.ini")
+                    IniClearCache(PathTemp & "Cache\Skin\IndexAuth.ini")
+                    IniClearCache(PathTemp & "Cache\Uuid\Mojang.ini")
+                    '刷新控件
+                    For Each SkinLoader In If(sender IsNot Nothing, {sender}, {PageLaunchLeft.SkinLegacy, PageLaunchLeft.SkinMs})
+                        SkinLoader.WaitForExit(IsForceRestart:=True)
+                    Next
+                    Hint(I18n.GetString("Skin.HintRefreshSuccess"), HintType.Green)
+                Catch ex As Exception
+                    Logger.Error(ex, "刷新皮肤缓存失败", LogBehavior.Alert)
+                End Try
+            End Sub)
+        End If
+    End Sub
+    ''' <summary>
+    ''' 在更换正版皮肤后，刷新正版皮肤。
+    ''' </summary>
+    ''' <param name="SkinAddress">新的正版皮肤完整地址。</param>
+    Public Shared Sub ReloadCache(SkinAddress As String)
+        RunInThread(
+        Sub()
+            Try
+                '更新缓存
+                WriteIni(PathTemp & "Cache\Skin\IndexMs.ini", Settings.Get(Of String)("CacheMsV2Uuid"), SkinAddress)
+                Logger.Info($"已写入皮肤地址缓存 {Settings.Get(Of String)("CacheMsV2Uuid")} -> {SkinAddress}")
+                '刷新控件
+                For Each SkinLoader In {PageLaunchLeft.SkinMs, PageLaunchLeft.SkinLegacy}
+                    SkinLoader.WaitForExit(IsForceRestart:=True)
+                Next
+                '完成提示
+                Hint(I18n.GetString("Skin.HintChangeSuccess"), HintType.Green)
+            Catch ex As Exception
+                Logger.Error(ex, "更改正版皮肤后刷新皮肤失败")
+            End Try
+        End Sub)
+    End Sub
+
+    '披风
+    Public Property HasCape As Boolean
+        Get
+            Return BtnSkinCape.Visibility = Visibility.Collapsed
+        End Get
+        Set(value As Boolean)
+            If value Then
+                BtnSkinCape.Visibility = Visibility.Visible
+            Else
+                BtnSkinCape.Visibility = Visibility.Collapsed
+            End If
+        End Set
+    End Property
+    Private IsChanging As Boolean = False
+    Public Sub BtnSkinCape_Click() Handles BtnSkinCape.Click
+        '检查条件，获取新披风
+        If IsChanging Then
+            Hint(I18n.GetString("Skin.CapeChanging"))
+            Return
+        End If
+        If McLoginMsLoader.State = LoadState.Failed Then
+            Hint(I18n.GetString("Skin.CapeErrLogin"), HintType.Red)
+            Return
+        End If
+        If McLoginMsLoader.State <> LoadState.Finished Then Hint(I18n.GetString("Skin.CapeFetching"))
+        IsChanging = True
+        '开始实际获取
+        RunInNewThread(
+        Sub()
+Retry:
+            Try
+                '获取登录信息
+                If McLoginMsLoader.State <> LoadState.Finished Then McLoginMsLoader.WaitForExit(PageLoginMsSkin.GetLoginData())
+                If McLoginMsLoader.State <> LoadState.Finished Then
+                    Hint(I18n.GetString("Skin.CapeErrLogin"), HintType.Red)
+                    Return
+                End If
+                Dim AccessToken As String = McLoginMsLoader.Output.AccessToken
+                Dim Uuid As String = McLoginMsLoader.Output.Uuid
+                Dim SkinData As JObject = McLoginMsLoader.Output.ProfileJson.DeserializeJson()
+                '获取玩家的所有披风
+                Dim SelectedIndex As Integer? = Nothing
+                RunInUiWait(
+                Sub()
+                    Try
+                        Dim CapeNames As New Dictionary(Of String, String) From {
+                            {"Migrator", I18n.GetString("Skin.CapeMigrator")}, {"MapMaker", I18n.GetString("Skin.CapeMapMaker")}, {"Moderator", I18n.GetString("Skin.CapeModerator")},
+                            {"Translator-Chinese", I18n.GetString("Skin.CapeTranslatorZh")}, {"Translator", I18n.GetString("Skin.CapeTranslator")}, {"Cobalt", I18n.GetString("Skin.CapeCobalt")},
+                            {"Vanilla", I18n.GetString("Skin.CapeVanilla")}, {"Minecon2011", I18n.GetString("Skin.CapeMinecon2011")}, {"Minecon2012", I18n.GetString("Skin.CapeMinecon2012")},
+                            {"Minecon2013", I18n.GetString("Skin.CapeMinecon2013")}, {"Minecon2015", I18n.GetString("Skin.CapeMinecon2015")}, {"Minecon2016", I18n.GetString("Skin.CapeMinecon2016")},
+                            {"Cherry Blossom", I18n.GetString("Skin.CapeCherry")}, {"15th Anniversary", I18n.GetString("Skin.Cape15th")}, {"Purple Heart", I18n.GetString("Skin.CapePurpleHeart")},
+                            {"Follower's", I18n.GetString("Skin.CapeFollower")}, {"MCC 15th Year", I18n.GetString("Skin.CapeMCC")}, {"Minecraft Experience", I18n.GetString("Skin.CapeExperience")},
+                            {"Mojang Office", I18n.GetString("Skin.CapeMojangOffice")}, {"Home", I18n.GetString("Skin.CapeHome")}, {"Menace", I18n.GetString("Skin.CapeMenace")}, {"Yearn", I18n.GetString("Skin.CapeYearn")},
+                            {"Common", I18n.GetString("Skin.CapeCommon")}, {"Pan", I18n.GetString("Skin.CapePan")}, {"Founder's", I18n.GetString("Skin.CapeFounder")}, {"Copper", I18n.GetString("Skin.CapeCopper")}, {"Zombie Horse", I18n.GetString("Skin.CapeZombieHorse")}, {"Builder", I18n.GetString("Skin.CapeBuilder")}, {"Crafter", I18n.GetString("Skin.CapeCrafter")},
+                            {"Aurora", I18n.GetString("Skin.CapeAurora")}
+                        }
+                        Dim SelectionControl As New List(Of IMyRadio) From {
+                            New MyRadioBox With {.Text = I18n.GetString("Skin.CapeNone"), .Checked = Not SkinData("capes").Any(Function(c) c("state")?.ToString = "ACTIVE")}}
+                        For Each Cape In SkinData("capes")
+                            Dim CapeName As String = Cape("alias").ToString
+                            If CapeNames.ContainsKey(CapeName) Then CapeName = CapeNames(CapeName)
+                            SelectionControl.Add(New MyRadioBox With {.Text = CapeName, .Checked = Cape("state")?.ToString = "ACTIVE"})
+                        Next
+                        SelectedIndex = MyMsgBoxSelect(SelectionControl, I18n.GetString("Skin.CapeTitle"), I18n.GetString("Skin.CapeBtnYes"), I18n.GetString("Skin.CapeBtnCancel"))
+                    Catch ex As Exception
+                        Logger.Error(ex, "获取玩家皮肤列表失败")
+                    End Try
+                End Sub)
+                If SelectedIndex Is Nothing Then Return
+                '发送请求
+                Dim Result As String = NetRequestByClientRetry("https://api.minecraftservices.com/minecraft/profile/capes/active",
+                    If(SelectedIndex = 0, HttpMethod.Delete, HttpMethod.Put),
+                    Content:=If(SelectedIndex = 0, "", New JObject(New JProperty("capeId", SkinData("capes")(SelectedIndex - 1)("id"))).ToString(0)),
+                    ContentType:="application/json",
+                    Headers:={{"Authorization", "Bearer " & AccessToken}})
+                If Result.Contains("""errorMessage""") Then
+                    Hint(I18n.GetString("Skin.CapeErrFail").Replace("%1%", Result.DeserializeJson()("errorMessage").ToString), HintType.Red)
+                    Return
+                Else
+                    Hint(I18n.GetString("Skin.CapeSuccess"), HintType.Green)
+                    '更新当前选择的披风
+                    For Each Cape In SkinData("capes")
+                        Cape("state") = "INACTIVE"
+                    Next
+                    If SelectedIndex > 0 Then SkinData("capes")(SelectedIndex - 1)("state") = "ACTIVE"
+                    McLoginMsLoader.Output.ProfileJson = SkinData.ToString()
+                    Settings.Set("CacheMsV2ProfileJson", McLoginMsLoader.Output.ProfileJson)
+                End If
+            Catch ex As Exception
+                If TypeOf ex Is HttpRequestCodeException Then
+                    Dim requestException As HttpRequestCodeException = CType(ex, HttpRequestCodeException)
+                    Select Case requestException.StatusCode
+                        Case HttpStatusCode.BadRequest
+                            Logger.Warn(ex, "更改披风时遭遇 400 错误")
+                            If requestException.Response?.Contains("""error""") Then
+                                Hint(I18n.GetString("Skin.CapeErrFail").Replace("%1%", requestException.Response.DeserializeJson()("error").ToString), HintType.Red)
+                                Return
+                            ElseIf requestException.Response?.Contains("""errorMessage""") Then
+                                Hint(I18n.GetString("Skin.CapeErrFail").Replace("%1%", requestException.Response.DeserializeJson()("errorMessage").ToString), HintType.Red)
+                                Return
+                            End If
+                        Case HttpStatusCode.Unauthorized
+                            Logger.Warn(ex, "更改披风时遭遇 401 错误")
+                            Hint(I18n.GetString("Skin.CapeHintRelogin"))
+                            McLoginMsLoader.Start(PageLoginMsSkin.GetLoginData(), IsForceRestart:=True)
+                            GoTo Retry
+                    End Select
+                ElseIf ex.IsBadNetwork Then
+                    Hint(I18n.GetString("Skin.CapeErrTimeout"), HintType.Red)
+                Else
+                    Logger.Error(ex, "更改披风失败", LogBehavior.Toast)
+                End If
+            Finally
+                IsChanging = False
+            End Try
+        End Sub, "Cape Change")
+    End Sub
+
+End Class

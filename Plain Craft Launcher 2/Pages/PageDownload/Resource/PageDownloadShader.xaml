@@ -1,0 +1,34 @@
+<local:MyPageRight
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:PCL" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    mc:Ignorable="d" x:Class="PageDownloadShader"
+    PanScroll="Content">
+    <local:PageResource x:Name="Content" PageType="Shader">
+        <local:MyComboBoxItem Tag="" Content="{DynamicResource PageDownloadShader.All}" IsSelected="True" />
+        
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadShader.Style}" IsEnabled="False" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadShader.Vanilla}" Tag="6555/vanilla-like" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadShader.Fantasy}" Tag="6554/fantasy" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadShader.Real}" Tag="6553/realistic" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadShader.Semi}" Tag="/semi-realistic" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadShader.Cartoon}" Tag="/cartoon" />
+
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadShader.Feature}" IsEnabled="False" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadShader.Color}" Tag="/colored-lighting" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadShader.Path}" Tag="/path-tracing" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadShader.Pbr}" Tag="/pbr" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadShader.Reflect}" Tag="/reflections" />
+
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadShader.Perf}" IsEnabled="False" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadShader.Low}" Tag="/potato" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadShader.Low2}" Tag="/low" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadShader.Mid}" Tag="/medium" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadShader.High}" Tag="/high" />
+
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadShader.Loader}" IsEnabled="False" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadShader.VanillaL}" Tag="/vanilla" ToolTip="{DynamicResource PageDownloadShader.VanillaLTooltip}" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadShader.Iris}" Tag="/iris" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadShader.OptiFine}" Tag="/optifine" />
+    </local:PageResource>
+</local:MyPageRight>

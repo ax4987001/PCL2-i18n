@@ -1,0 +1,336 @@
+<local:MyPageRight
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:PCL" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    mc:Ignorable="d" x:Class="PageSetupUI"
+    PanScroll="PanBack">
+    <local:MyScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" x:Name="PanBack">
+        <StackPanel x:Name="PanMain" Margin="25,10">
+            <local:MyCard Margin="0,15" Title="{DynamicResource Text_Basic}" x:Name="CardLauncher">
+                <Grid Margin="25,40,25,17">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Name1" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="30" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Text_Opacity}" Margin="0,0,20,0" />
+                            <local:MySlider local:SettingService.Key="UiLauncherTransparent" 
+                                            MaxValue="600" ValueByKey="10" Grid.ColumnSpan="5" x:Name="SliderLauncherTransparent" Grid.Column="1" />
+                            <TextBlock Grid.Row="1" VerticalAlignment="Center" Name="LabLauncherHue" Visibility="Collapsed" HorizontalAlignment="Left" Text="{DynamicResource Text_Hue}" Margin="0,10,20,0" />
+                            <local:MySlider local:SettingService.Key="UiLauncherHue" 
+                                            Grid.Row="1" Grid.Column="1" x:Name="SliderLauncherHue" Visibility="Collapsed" MaxValue="360" ValueByKey="10" Margin="0,10,0,0" />
+                            <TextBlock Grid.Row="2" VerticalAlignment="Center" Name="LabLauncherDelta" Visibility="Collapsed" HorizontalAlignment="Left" Text="{DynamicResource Text_HueDelta}" Margin="0,10,20,0" />
+                            <local:MySlider local:SettingService.Key="UiLauncherDelta" 
+                                            Grid.Row="2" Grid.Column="1" x:Name="SliderLauncherDelta" Visibility="Collapsed" MaxValue="180" ValueByKey="5" Margin="0,10,0,0" />
+                            <TextBlock Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Name="LabLauncherSat" Visibility="Collapsed" HorizontalAlignment="Left" Text="{DynamicResource Text_Saturation}" Margin="0,10,20,0" />
+                            <local:MySlider local:SettingService.Key="UiLauncherSat" 
+                                            Grid.Row="1" Grid.Column="4" x:Name="SliderLauncherSat" Visibility="Collapsed" MaxValue="100" ValueByKey="5" Margin="0,10,0,0" />
+                            <TextBlock Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Name="LabLauncherLight" Visibility="Collapsed" HorizontalAlignment="Left" Text="{DynamicResource Text_Lightness}" Margin="0,10,20,0" />
+                            <local:MySlider local:SettingService.Key="UiLauncherLight" 
+                                            Grid.Row="2" Grid.Column="4" x:Name="SliderLauncherLight" Visibility="Collapsed" MaxValue="40" ValueByKey="5" Margin="0,10,0,0" />
+                        </Grid>
+                        <Grid x:Name="PanLauncherTheme" Height="90" Margin="0,0,0,7">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Name1" />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Text_Theme}" Margin="0,0,20,0" />
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Text_HiddenTheme}" Margin="0,0,20,0" Grid.Row="1" />
+                            <local:MyRadioBox local:SettingService.Key="UiLauncherTheme" local:SettingService.Value="0" 
+                                              Grid.Column="1" Grid.Row="0" Text="{DynamicResource Text_ThemeBlue}" x:Name="RadioLauncherTheme0" />
+                            <local:MyRadioBox local:SettingService.Key="UiLauncherTheme" local:SettingService.Value="1" 
+                                              Grid.Column="2" Grid.Row="0" Text="{DynamicResource Text_ThemeGreen}" x:Name="RadioLauncherTheme1" />
+                            <local:MyRadioBox local:SettingService.Key="UiLauncherTheme" local:SettingService.Value="2" 
+                                              Grid.Column="3" Grid.Row="0" Text="{DynamicResource Text_ThemeGrass}" x:Name="RadioLauncherTheme2" />
+                            <local:MyRadioBox local:SettingService.Key="UiLauncherTheme" local:SettingService.Value="3" 
+                                              Grid.Column="4" Grid.Row="0" Text="{DynamicResource Text_ThemeYellow}" x:Name="RadioLauncherTheme3" />
+                            <local:MyRadioBox local:SettingService.Key="UiLauncherTheme" local:SettingService.Value="4" 
+                                              Grid.Column="5" Grid.Row="0" Text="{DynamicResource Text_ThemeBrown}" x:Name="RadioLauncherTheme4" />
+                            <local:MyRadioBox local:SettingService.Key="UiLauncherTheme" local:SettingService.Value="5" 
+                                              Grid.Column="1" Grid.Row="1" Text="{DynamicResource Text_ThemeBlack}" x:Name="RadioLauncherTheme5" Opacity="0" ToolTip="{DynamicResource Text_ThemeBlackTip}" />
+                            <local:MyRadioBox Grid.Column="1" Grid.Row="1" Text="{DynamicResource Text_ThemeBlack}" x:Name="RadioLauncherTheme5Gray" IsEnabled="False" Opacity="1" />
+                            <TextBlock Grid.Column="1" Grid.Row="1" x:Name="LabLauncherTheme5Unlock" Background="{StaticResource ColorBrushSemiTransparent}" ToolTip="{DynamicResource Text_ThemeBlackTip}" />
+                            <local:MyRadioBox local:SettingService.Key="UiLauncherTheme" local:SettingService.Value="12" 
+                                              Grid.Column="2" Grid.Row="1" Text="{DynamicResource Text_ThemeRainbow}" x:Name="RadioLauncherTheme12" IsEnabled="False" ToolTip="{DynamicResource Text_ThemeRainbowTip}" ToolTipService.ShowOnDisabled="True" />
+                            <local:MyRadioBox local:SettingService.Key="UiLauncherTheme" local:SettingService.Value="6" 
+                                              Grid.Column="3" Grid.Row="1" Text="{DynamicResource Text_ThemePink}" x:Name="RadioLauncherTheme6" IsEnabled="False" ToolTip="{DynamicResource Text_ThemePinkTip}" ToolTipService.ShowOnDisabled="True" />
+                            <local:MyRadioBox local:SettingService.Key="UiLauncherTheme" local:SettingService.Value="7" 
+                                              Grid.Column="4" Grid.Row="1" Text="{DynamicResource Text_ThemePurple}" x:Name="RadioLauncherTheme7" IsEnabled="False" ToolTip="{DynamicResource Text_ThemePurpleTip}" ToolTipService.ShowOnDisabled="True" />
+                            <local:MyRadioBox local:SettingService.Key="UiLauncherTheme" local:SettingService.Value="13" 
+                                              Grid.Column="5" Grid.Row="1" Text="{DynamicResource Text_ThemeGold}" x:Name="RadioLauncherTheme13" IsEnabled="False" ToolTip="{DynamicResource Text_ThemeGoldTip}" ToolTipService.ShowOnDisabled="True" />
+                            <local:MyRadioBox local:SettingService.Key="UiLauncherTheme" local:SettingService.Value="8" 
+                                              Grid.Column="1" Grid.Row="2" Text="{DynamicResource Text_ThemeAutumn}" x:Name="RadioLauncherTheme8" IsEnabled="False" />
+                            <TextBlock Grid.Column="1" Grid.Row="2" x:Name="LabLauncherTheme8Copy" Background="{StaticResource ColorBrushSemiTransparent}" />
+                            <local:MyRadioBox local:SettingService.Key="UiLauncherTheme" local:SettingService.Value="9" 
+                                              Grid.Column="2" Grid.Row="2" Text="{DynamicResource Text_ThemeOrange}" x:Name="RadioLauncherTheme9" IsEnabled="False" />
+                            <TextBlock Grid.Column="2" Grid.Row="2" x:Name="LabLauncherTheme9Copy" Background="{StaticResource ColorBrushSemiTransparent}" />
+                            <local:MyRadioBox local:SettingService.Key="UiLauncherTheme" local:SettingService.Value="10" 
+                                              Grid.Column="3" Grid.Row="2" Text="{DynamicResource Text_ThemeRed}" x:Name="RadioLauncherTheme10" IsEnabled="False" ToolTip="{DynamicResource Text_ThemeRedTip}" ToolTipService.ShowOnDisabled="True" />
+                            <local:MyRadioBox local:SettingService.Key="UiLauncherTheme" local:SettingService.Value="11" 
+                                              Grid.Column="4" Grid.Row="2" Text="{DynamicResource Text_ThemeGeek}" x:Name="RadioLauncherTheme11" IsEnabled="False" ToolTip="{DynamicResource Text_ThemeGeekTip}" />
+                            <TextBlock Grid.Column="4" Grid.Row="2" x:Name="LabLauncherTheme11Click" Background="{StaticResource ColorBrushSemiTransparent}" />
+                            <local:MyRadioBox local:SettingService.Key="UiLauncherTheme" local:SettingService.Value="14" 
+                                              Grid.Column="5" Grid.Row="2" Text="{DynamicResource Text_ThemeCustom}" x:Name="RadioLauncherTheme14" IsEnabled="False" ToolTip="{DynamicResource Text_ThemeCustomTip}" ToolTipService.ShowOnDisabled="True" />
+                        </Grid>
+                        <local:MyCheckBox local:SettingService.Key="UiLauncherLogo" Text="{DynamicResource Text_ShowLogo}" Margin="-1,0,0,1" Height="22" />
+                    </StackPanel>
+                    <Border Background="#DDDDDDDD" Margin="-8,23,-5,28" CornerRadius="4" Name="PanLauncherHide" Visibility="Collapsed">
+                    </Border>
+                </Grid>
+            </local:MyCard>
+            <local:MyCard x:Name="CardBackground" Margin="0,0,0,15" Title="{DynamicResource Text_BackgroundImage}">
+                <StackPanel Margin="25,40,25,20">
+                    <Grid x:Name="PanBackgroundSuit" Height="28" Margin="0,0,0,10" Visibility="Collapsed">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Name" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Text_BackgroundFit}" Margin="0,0,25,0" />
+                        <local:MyComboBox local:SettingService.Key="UiBackgroundSuit" Grid.Column="1">
+                            <local:MyComboBoxItem local:SettingService.Value="0" Content="{DynamicResource Text_FitAuto}" ToolTip="{DynamicResource Text_FitAutoTip}" />
+                            <local:MyComboBoxItem local:SettingService.Value="4" Content="{DynamicResource Text_FitTile}" />
+                            <local:MyComboBoxItem local:SettingService.Value="1" Content="{DynamicResource Text_FitCenter}" />
+                            <local:MyComboBoxItem local:SettingService.Value="3" Content="{DynamicResource Text_FitStretch}" ToolTip="{DynamicResource Text_FitStretchTip}" />
+                            <local:MyComboBoxItem local:SettingService.Value="5" Content="{DynamicResource Text_FitTopLeft}" />
+                            <local:MyComboBoxItem local:SettingService.Value="9" Content="{DynamicResource Text_FitMiddleLeft}" />
+                            <local:MyComboBoxItem local:SettingService.Value="7" Content="{DynamicResource Text_FitBottomLeft}" />
+                            <local:MyComboBoxItem local:SettingService.Value="11" Content="{DynamicResource Text_FitTopCenter}" />
+                            <local:MyComboBoxItem local:SettingService.Value="2" Content="{DynamicResource Text_FitCenterKeepRatio}" />
+                            <local:MyComboBoxItem local:SettingService.Value="12" Content="{DynamicResource Text_FitBottomCenter}" />
+                            <local:MyComboBoxItem local:SettingService.Value="6" Content="{DynamicResource Text_FitTopRight}" />
+                            <local:MyComboBoxItem local:SettingService.Value="10" Content="{DynamicResource Text_FitMiddleRight}" />
+                            <local:MyComboBoxItem local:SettingService.Value="8" Content="{DynamicResource Text_FitBottomRight}" />
+                        </local:MyComboBox>
+                    </Grid>
+                    <Grid x:Name="PanBackgroundOpacity" Height="22" Margin="0,0,0,7" Visibility="Collapsed">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Name" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Text_Opacity}" Margin="0,0,25,0" />
+                        <local:MySlider local:SettingService.Key="UiBackgroundOpacity" x:Name="SliderBackgroundOpacity" MaxValue="1000" ValueByKey="10" Grid.Column="1" />
+                    </Grid>
+                    <Grid x:Name="PanBackgroundBlur" Height="22" Margin="0,0,0,10" Visibility="Collapsed">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Name" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Text_BackgroundBlur}" Margin="0,0,25,0" />
+                        <local:MySlider local:SettingService.Key="UiBackgroundBlur" x:Name="SliderBackgroundBlur" MaxValue="40" Grid.Column="1" 
+                                        ToolTip="{DynamicResource Text_BackgroundBlurTip}" />
+                    </Grid>
+                    <local:MyCheckBox local:SettingService.Key="UiBackgroundColorful" Text="{DynamicResource Text_ColorfulBackground}" Margin="-1,0,0,8" Height="22" />
+                    <Grid Height="35" Margin="0,2,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                        </Grid.ColumnDefinitions>
+                        <local:MyButton x:Name="BtnBackgroundOpen" MinWidth="140" Text="{DynamicResource Text_OpenFolder}" Padding="13,0" Margin="0,0,20,0" ToolTip="{DynamicResource Text_BackgroundOpenTip}"/>
+                        <local:MyButton x:Name="BtnBackgroundRefresh" MinWidth="140" Text="{DynamicResource Text_RefreshBackground}" Padding="13,0" Margin="0,0,20,0" ToolTip="{DynamicResource Text_BackgroundRefreshTip}" Grid.Column="1"/>
+                        <local:MyButton x:Name="BtnBackgroundClear" MinWidth="140" Text="{DynamicResource Text_ClearBackground}" Visibility="Collapsed" Padding="13,0" Margin="0,0,20,0" ColorType="Red" Grid.Column="2"/>
+                    </Grid>
+                </StackPanel>
+            </local:MyCard>
+            <local:MyCard x:Name="CardMusic" Margin="0,0,0,15" Title="{DynamicResource Text_BackgroundMusic}">
+                <StackPanel Margin="25,42,25,20">
+                    <Grid x:Name="PanMusicVolume" Visibility="Collapsed" Height="22" Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Name" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Text_Volume}" Margin="0,0,25,0" />
+                        <local:MySlider x:Name="SliderMusicVolume" local:SettingService.Key="UiMusicVolume" MaxValue="1000" ValueByKey="10" Grid.Column="1" />
+                    </Grid>
+                    <StackPanel x:Name="PanMusicDetail" Visibility="Collapsed" Margin="-1,0,0,3">
+                        <local:MyCheckBox Text="{DynamicResource Text_MusicRandom}" Margin="0,0,0,5" Height="22" x:Name="CheckMusicRandom" local:SettingService.Key="UiMusicRandom" />
+                        <local:MyCheckBox Text="{DynamicResource Text_MusicAuto}" Margin="0,0,0,5" Height="22" x:Name="CheckMusicAuto" local:SettingService.Key="UiMusicAuto" />
+                        <local:MyCheckBox Text="{DynamicResource Text_MusicStart}" Margin="0,0,0,5" Height="22" x:Name="CheckMusicStart" local:SettingService.Key="UiMusicStart" />
+                        <local:MyCheckBox Text="{DynamicResource Text_MusicStop}" Margin="0,0,0,5" Height="22" x:Name="CheckMusicStop" local:SettingService.Key="UiMusicStop" />
+                    </StackPanel>
+                    <Grid Height="35">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                        </Grid.ColumnDefinitions>
+                        <local:MyButton x:Name="BtnMusicOpen" Text="{DynamicResource Text_OpenFolder}" MinWidth="140" Padding="13,0" Margin="0,0,20,0" ToolTip="{DynamicResource Text_MusicOpenTip}"/>
+                        <local:MyButton x:Name="BtnMusicRefresh" Text="{DynamicResource Text_RefreshMusic}" MinWidth="140" Padding="13,0" Margin="0,0,20,0" ToolTip="{DynamicResource Text_MusicRefreshTip}" Grid.Column="1"/>
+                        <local:MyButton x:Name="BtnMusicClear" Text="{DynamicResource Text_ClearMusic}" MinWidth="140" Visibility="Collapsed" Padding="13,0" Margin="0,0,20,0" ColorType="Red" Grid.Column="2"/>
+                    </Grid>
+                </StackPanel>
+            </local:MyCard>
+            <local:MyCard x:Name="CardLogo" Margin="0,0,0,15" Title="{DynamicResource Text_TitleBar}">
+                <StackPanel Margin="25,40,25,15">
+                    <Grid Margin="-1,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="0.2*" />
+                        </Grid.ColumnDefinitions>
+                        <local:MyRadioBox Text="{DynamicResource Text_None}" x:Name="RadioLogoType0" Height="22" local:SettingService.Key="UiLogoType" local:SettingService.Value="0" Grid.Column="0" />
+                        <local:MyRadioBox Text="{DynamicResource Text_Default}" x:Name="RadioLogoType1" Height="22" local:SettingService.Key="UiLogoType" local:SettingService.Value="1" Grid.Column="1" />
+                        <local:MyRadioBox Text="{DynamicResource Text_Text}" x:Name="RadioLogoType2" Height="22" local:SettingService.Key="UiLogoType" local:SettingService.Value="2" Grid.Column="2" />
+                        <local:MyRadioBox Text="{DynamicResource Text_Image}" x:Name="RadioLogoType3" Height="22" local:SettingService.Key="UiLogoType" local:SettingService.Value="3" Grid.Column="3" />
+                    </Grid>
+                    <local:MyCheckBox Text="{DynamicResource Text_TitleLeft}" Margin="-1,8,0,3" Height="22" x:Name="CheckLogoLeft" local:SettingService.Key="UiLogoLeft" Visibility="Collapsed" />
+                    <Grid x:Name="PanLogoText" Margin="0,14,0,5" Visibility="Collapsed">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Name" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Text_TitleText}" Margin="0,0,25,0" />
+                        <local:MyTextBox x:Name="TextLogoText" local:SettingService.Key="UiLogoText" Grid.Column="1" MaxLength="100" />
+                    </Grid>
+                    <Grid x:Name="PanLogoChange" Margin="0,14,0,5" Height="35" Visibility="Collapsed">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                        </Grid.ColumnDefinitions>
+                        <local:MyButton x:Name="BtnLogoChange" Text="{DynamicResource Text_ChangeImage}" MinWidth="140" Padding="13,0" Margin="0,0,20,0" />
+                        <local:MyButton x:Name="BtnLogoDelete" Text="{DynamicResource Text_ClearImage}" MinWidth="140" Padding="13,0" Margin="0,0,20,0" ColorType="Red" Grid.Column="1" />
+                    </Grid>
+                </StackPanel>
+            </local:MyCard>
+            <local:MyCard Margin="0,0,0,15" Title="{DynamicResource Text_HomePage}" x:Name="CardCustom">
+                <StackPanel Margin="25,40,25,15">
+                    <Grid Margin="-1,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="0.2*" />
+                        </Grid.ColumnDefinitions>
+                        <local:MyRadioBox Text="{DynamicResource Text_HomeBlank}" x:Name="RadioCustomType0" Height="22" local:SettingService.Key="UiCustomType" local:SettingService.Value="0" Grid.Column="0" />
+                        <local:MyRadioBox Text="{DynamicResource Text_HomePreset}" x:Name="RadioCustomType3" Height="22" local:SettingService.Key="UiCustomType" local:SettingService.Value="3" Grid.Column="1" />
+                        <local:MyRadioBox Text="{DynamicResource Text_HomeLocal}" x:Name="RadioCustomType1" Height="22" local:SettingService.Key="UiCustomType" local:SettingService.Value="1" Grid.Column="2" />
+                        <local:MyRadioBox Text="{DynamicResource Text_HomeNet}" x:Name="RadioCustomType2" Height="22" local:SettingService.Key="UiCustomType" local:SettingService.Value="2" Grid.Column="3" />
+                    </Grid>
+                    <local:MyHint Margin="0,15,0,-4" Text="{DynamicResource Text_HomeModSetupHint}" Theme="Blue" x:Name="HintCustom" />
+                    <local:MyHint Margin="0,15,0,6" Text="{DynamicResource Text_HomeWarnHint}" Theme="Yellow" x:Name="HintCustomWarn" 
+                                  CanClose="True" RelativeSetup="HintCustomWarn" />
+                    <WrapPanel x:Name="PanCustomLocal" Visibility="Collapsed" Margin="0,0,0,5">
+                        <local:MyButton x:Name="BtnCustomRefresh" Text="{DynamicResource Text_RefreshHome}"  
+                                        MinWidth="140" Height="35" Padding="13,0" Margin="0,10,20,0" HorizontalAlignment="Left" ColorType="Highlight" />
+                        <local:MyButton x:Name="BtnCustomFile" Text="{DynamicResource Text_GenTutorial}" 
+                                        MinWidth="140" Height="35" Padding="13,0" Margin="0,10,20,0" HorizontalAlignment="Left" />
+                        <local:MyButton x:Name="BtnCustomTutorial" Text="{DynamicResource Text_ViewTutorial}" 
+                                        MinWidth="140" Height="35" Padding="13,0" Margin="0,10,20,0" HorizontalAlignment="Left" />
+                        <local:MyButton x:Name="BtnCustomFolder" Text="{DynamicResource Text_OpenHomeFolder}" 
+                                        MinWidth="140" Height="35" Padding="13,0" Margin="0,10,20,0" HorizontalAlignment="Left" />
+                    </WrapPanel>
+                    <Grid x:Name="PanCustomNet" Visibility="Collapsed" Margin="0,10,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Name" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Text_DownloadUrl}" Margin="0,0,25,0" />
+                        <local:MyTextBox x:Name="TextCustomNet" local:SettingService.Key="UiCustomNet" Grid.Column="1" MaxHeight="28"
+                                         ToolTip="{DynamicResource Text_DownloadUrlTip}">
+                            <local:MyTextBox.ValidateRules>
+                                <local:ValidateNullable />
+                                <local:ValidateHttp />
+                            </local:MyTextBox.ValidateRules>
+                        </local:MyTextBox>
+                    </Grid>
+                    <Grid x:Name="PanCustomPreset" Visibility="Collapsed" Margin="0,12,10,5" Height="28">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Name" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Text_HomePreset}" Margin="0,0,25,0" />
+                        <local:MyComboBox local:SettingService.Key="UiCustomPreset" Grid.ColumnSpan="2" Grid.Column="1">
+                            <local:MyComboBoxItem local:SettingService.Value="0" Content="你知道吗？" />
+                            <local:MyComboBoxItem local:SettingService.Value="1" Content="回声洞" />
+                            <local:MyComboBoxItem local:SettingService.Value="2" Content="Minecraft 新闻（作者：最亮的信标）" />
+                            <local:MyComboBoxItem local:SettingService.Value="4" Content="每日整合包推荐（作者：wkea）" />
+                            <local:MyComboBoxItem local:SettingService.Value="5" Content="Minecraft 皮肤推荐（作者：wkea）" />
+                            <local:MyComboBoxItem local:SettingService.Value="6" Content="OpenBMCLAPI 仪表盘 Lite（作者：Silverteal、Mxmilu666）" />
+                            <local:MyComboBoxItem local:SettingService.Value="9" Content="PCL 新功能说明书（作者：WForst-Breeze）" />
+                            <local:MyComboBoxItem local:SettingService.Value="11" Content="杂志主页（作者：CreeperIsASpy）" />
+                            <local:MyComboBoxItem local:SettingService.Value="12" Content="PCL GitHub 仪表盘（作者：Deep-Dark-Forest）" />
+                            <local:MyComboBoxItem local:SettingService.Value="13" Content="Minecraft 更新摘要（作者：pynickle）" />
+                            <local:MyComboBoxItem local:SettingService.Value="14" Content="今日新闻热点（作者：EYicheng）" />
+                            <local:MyComboBoxItem local:SettingService.Value="15" Content="Minecraft 芝士站（作者：awaEric233）" />
+                            <local:MyComboBoxItem local:SettingService.Value="16" Content="整合包推荐引擎（作者：CHMYGZ）" />
+                            <local:MyComboBoxItem local:SettingService.Value="17" Content="Bangumi 番剧主页（作者：wzyaeu）" />
+                            <local:MyComboBoxItem local:SettingService.Value="18" Content="Bilibili 热门（作者：wzyaeu）" />
+                            <local:MyComboBoxItem local:SettingService.Value="19" Content="Music 云音乐热门（作者：wzyaeu）" />
+                            <local:MyComboBoxItem local:SettingService.Value="20" Content="模组推荐（作者：llsgllsg）" />
+                            <local:MyComboBoxItem local:SettingService.Value="21" Content="每日游戏推荐（作者：llsgllsg）" />
+                            <local:MyComboBoxItem local:SettingService.Value="22" Content="Wallpaper 每日壁纸（作者：wzyaeu）" />
+                            <local:MyComboBoxItem local:SettingService.Value="23" Content="Weather 天气预报（作者：wzyaeu）" />
+                            <local:MyComboBoxItem local:SettingService.Value="24" Content="新一代狗屁王大杂烩主页（作者：llsgllsg）" />
+                        </local:MyComboBox>
+                    </Grid>
+                </StackPanel>
+            </local:MyCard>
+            <local:MyCard x:Name="CardSwitch" Margin="0,0,0,15" Title="{DynamicResource Text_HideFunction}">
+                <StackPanel Margin="25,38,15,15">
+                    <TextBlock Margin="0,1,0,1" Text="{DynamicResource Text_HideFunctionHint}" TextWrapping="Wrap" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="18" />
+                            <ColumnDefinition Width="0.8*" />
+                            <ColumnDefinition Width="0.9*" />
+                            <ColumnDefinition Width="0.8*" />
+                            <ColumnDefinition Width="0.8*" />
+                            <ColumnDefinition Width="1.0*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="4" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Text_MainPage}" />
+                        <local:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="1" Grid.Column="2" Text="{DynamicResource Text_Download}" x:Name="CheckHiddenPageDownload" local:SettingService.Key="UiHiddenPageDownload" />
+                        <local:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="1" Grid.Column="3" Text="{DynamicResource Text_Link}" x:Name="CheckHiddenPageLink" local:SettingService.Key="UiHiddenPageLink" IsEnabled="False" />
+                        <local:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="1" Grid.Column="4" Text="{DynamicResource Text_Settings}" x:Name="CheckHiddenPageSetup" local:SettingService.Key="UiHiddenPageSetup" />
+                        <local:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="1" Grid.Column="5" Text="{DynamicResource Text_Other}" x:Name="CheckHiddenPageOther" local:SettingService.Key="UiHiddenPageOther" />
+                        <TextBlock Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Text_SettingsSubPage}" />
+                        <local:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="2" Grid.Column="2" Text="{DynamicResource Text_Launch}" x:Name="CheckHiddenSetupLaunch" local:SettingService.Key="UiHiddenSetupLaunch" />
+                        <local:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="2" Grid.Column="3" Text="{DynamicResource Text_Link}" x:Name="CheckHiddenSetupLink" local:SettingService.Key="UiHiddenSetupLink" IsEnabled="False" />
+                        <local:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="2" Grid.Column="4" Text="{DynamicResource Text_Personalize}" x:Name="CheckHiddenSetupUI" local:SettingService.Key="UiHiddenSetupUi" />
+                        <local:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="2" Grid.Column="5" Text="{DynamicResource Text_Other}" x:Name="CheckHiddenSetupSystem" local:SettingService.Key="UiHiddenSetupSystem" />
+                        <TextBlock Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Text_OtherSubPage}" />
+                        <local:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="3" Grid.Column="2" Text="{DynamicResource Text_Help}" x:Name="CheckHiddenOtherHelp" local:SettingService.Key="UiHiddenOtherHelp" />
+                        <local:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="3" Grid.Column="3" Text="{DynamicResource Text_Toolbox}" x:Name="CheckHiddenOtherTest" local:SettingService.Key="UiHiddenOtherTest" />
+                        <local:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="3" Grid.Column="4" Text="{DynamicResource Text_Feedback}" x:Name="CheckHiddenOtherFeedback" local:SettingService.Key="UiHiddenOtherFeedback" />
+                        <local:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="3" Grid.Column="5" Text="{DynamicResource Text_Vote}" x:Name="CheckHiddenOtherVote" local:SettingService.Key="UiHiddenOtherVote" />
+                        <TextBlock Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Text_SpecificFunction}" />
+                        <local:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="4" Grid.Column="2" Text="{DynamicResource Text_HideEmail}" x:Name="CheckLauncherEmail" local:SettingService.Key="UiLauncherEmail" ToolTip="{DynamicResource Text_HideEmailTip}" />
+                        <local:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="4" Grid.Column="3" Text="{DynamicResource Text_VersionManage}" x:Name="CheckHiddenFunctionSelect" local:SettingService.Key="UiHiddenFunctionSelect" ToolTip="{DynamicResource Text_VersionManageTip}" />
+                        <local:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="4" Grid.Column="4" Text="{DynamicResource Text_ModUpdate}" x:Name="CheckHiddenFunctionModUpdate" local:SettingService.Key="UiHiddenFunctionModUpdate" ToolTip="{DynamicResource Text_ModUpdateTip}" />
+                        <local:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="4" Grid.Column="5" Text="{DynamicResource Text_HideFunction}" x:Name="CheckHiddenFunctionHidden" local:SettingService.Key="UiHiddenFunctionHidden" ToolTip="{DynamicResource Text_HideFunctionTip}" />
+                        <local:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="4" Grid.Column="6" Text="{DynamicResource Text_VersionModify}" x:Name="CheckHiddenFunctionModify" local:SettingService.Key="UiHiddenFunctionInstanceModify" ToolTip="{DynamicResource Text_VersionModifyTip}" />
+                    </Grid>
+                </StackPanel>
+            </local:MyCard>
+        </StackPanel>
+    </local:MyScrollViewer>
+</local:MyPageRight>

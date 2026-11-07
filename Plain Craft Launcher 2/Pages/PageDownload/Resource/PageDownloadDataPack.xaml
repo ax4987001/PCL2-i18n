@@ -1,0 +1,26 @@
+<local:MyPageRight
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:PCL" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    mc:Ignorable="d" x:Class="PageDownloadDataPack"
+    PanScroll="Content">
+    <local:PageResource x:Name="Content" PageType="DataPack">
+        <local:MyComboBoxItem Tag="" Content="{DynamicResource PageDownloadDataPack.All}" IsSelected="True" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadDataPack.Worldgen}" Tag="/worldgen" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadDataPack.Tech}" Tag="6951/technology" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadDataPack.Mech}" Tag="/game-mechanics" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadDataPack.Trans}" Tag="/transportation" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadDataPack.Storage}" Tag="/storage" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadDataPack.Magic}" Tag="6952/magic" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadDataPack.Adv}" Tag="6948/adventure" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadDataPack.Fantasy}" Tag="6949/" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadDataPack.Deco}" Tag="/decoration" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadDataPack.Mob}" Tag="/mobs" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadDataPack.Util}" Tag="6953/utility" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadDataPack.Equip}" Tag="/equipment" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadDataPack.Opt}" Tag="/optimization" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadDataPack.Server}" Tag="/social" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadDataPack.Lib}" Tag="6950/library" />
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadDataPack.Mod}" Tag="6946/" />
+    </local:PageResource>
+</local:MyPageRight>

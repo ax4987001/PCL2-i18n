@@ -1,0 +1,45 @@
+<local:MyPageRight
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:PCL" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    mc:Ignorable="d" x:Class="PageDownloadResourcePack"
+    PanScroll="Content">
+    <local:PageResource x:Name="Content" PageType="ResourcePack">
+        <local:MyComboBoxItem Tag="" Content="{DynamicResource PageDownloadResourcePack.All}" IsSelected="True" />
+
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadResourcePack.Style}" IsEnabled="False" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadResourcePack.Vanilla}" Tag="403/vanilla-like" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadResourcePack.Real}" Tag="400/realistic" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadResourcePack.Modern}" Tag="401/" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadResourcePack.Medieval}" Tag="402/" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadResourcePack.Steam}" Tag="399/" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadResourcePack.Theme}" Tag="/themed" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadResourcePack.Simple}" Tag="/simplistic" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadResourcePack.Deco}" Tag="/decoration" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadResourcePack.Combat}" Tag="/combat" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadResourcePack.Util}" Tag="/utility" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadResourcePack.Tweak}" Tag="/tweaks" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadResourcePack.Cursed}" Tag="/cursed" />
+
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadResourcePack.Feature}" IsEnabled="False" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadResourcePack.Entity}" Tag="/entities" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadResourcePack.Sound}" Tag="/audio" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadResourcePack.Font}" Tag="5244/fonts" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadResourcePack.Model}" Tag="/models" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadResourcePack.Lang}" Tag="/locale" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadResourcePack.Gui}" Tag="/gui" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadResourcePack.Shader}" Tag="/core-shaders" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadResourcePack.Anim}" Tag="404/" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadResourcePack.Mod}" Tag="4465/modded" />
+
+        <local:MyComboBoxItem Content="{DynamicResource PageDownloadResourcePack.Res}" IsEnabled="False" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadResourcePack.Res8}" Tag="/8x-" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadResourcePack.Res16}" Tag="393/16x" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadResourcePack.Res32}" Tag="394/32x" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadResourcePack.Res48}" Tag="/48x" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadResourcePack.Res64}" Tag="395/64x" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadResourcePack.Res128}" Tag="396/128x" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadResourcePack.Res256}" Tag="397/256x" />
+        <local:MyComboBoxItem Margin="15,0,0,0" Content="{DynamicResource PageDownloadResourcePack.Res512}" Tag="398/512x+" />
+    </local:PageResource>
+</local:MyPageRight>

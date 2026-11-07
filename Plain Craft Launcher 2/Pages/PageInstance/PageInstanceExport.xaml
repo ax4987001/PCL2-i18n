@@ -1,0 +1,314 @@
+<local:MyPageRight
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:PCL" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:System="clr-namespace:System;assembly=mscorlib" 
+    mc:Ignorable="d" x:Class="PageInstanceExport"
+    PanScroll="PanBack">
+    <Grid x:Name="PanAllBack">
+        <Grid.Resources>
+            <Style TargetType="local:MyCheckBox">
+                <Setter Property="Height" Value="26" />
+            </Style>
+        </Grid.Resources>
+        <local:MyScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" x:Name="PanBack">
+            <StackPanel Margin="25,10,25,65">
+                <local:MyHint Margin="0,15,0,0" Text="{DynamicResource InstanceExport.HintOptiFine}" Theme="Yellow" x:Name="HintOptiFine" />
+                <local:MyHint Margin="0,15,0,0" Theme="Yellow" x:Name="HintJava" />
+                <local:MyCard Margin="0,15">
+                    <Grid Margin="22,15,25,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="0.3*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="28" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource InstanceExport.LabelName}" Margin="0,0,20,0" />
+                        <local:MyTextBox Grid.Row="0" Grid.Column="1" x:Name="TextExportName" MaxLength="100" />
+                        <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource InstanceExport.LabelVersion}" Margin="30,0,20,0" />
+                        <local:MyTextBox Grid.Row="0" Grid.Column="3" x:Name="TextExportVersion" Tag="VersionArgumentTitle" MaxLength="100" />
+                    </Grid>
+                </local:MyCard>
+                <local:MyCard Margin="0,0,0,15" x:Name="CardOptions" MinHeight="39">
+                    <local:MyIconTextButton x:Name="BtnOverrideCancel" Height="24" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,5,0"
+                                            IsHitTestVisible="False" Opacity="0.5"
+                                            Text="{DynamicResource Text_Reset}" Logo="M530 0c287 0 521 229 521 511s-233 511-521 511c-233 0-436-151-500-368a63 63 0 0 1 44-79 65 65 0 0 1 80 43c48 162 200 276 375 276 215 0 390-171 390-383s-174-383-390-383c-103 0-199 39-270 106l21-5a63 63 0 0 1 33 123l-157 42a65 65 0 0 1-90-42l-49-183a65 65 0 1 1 126-33l6 26A524 524 0 0 1 530 0z" LogoScale="0.9"  />
+                    <StackPanel Margin="25,38,15,15" Name="PanOptions">
+                        <local:MyCheckBox IsEnabled="False" x:Name="CheckOptionsBasic">
+                            <local:MyCheckBox.Tag>
+                                <local:ExportOption 
+                                Title="InstanceExport.OptionBasic"
+                                DefaultChecked="True" />
+                            </local:MyCheckBox.Tag>
+                        </local:MyCheckBox>
+                        <local:MyCheckBox x:Name="CheckOptionsOptions" Margin="30,0,0,0">
+                            <local:MyCheckBox.Tag>
+                                <local:ExportOption 
+                                Title="InstanceExport.OptionOptions"
+                                Description="InstanceExport.OptionOptionsTip"
+                                Rules="options.txt|configureddefaults/"
+                                DefaultChecked="True" />
+                            </local:MyCheckBox.Tag>
+                        </local:MyCheckBox>
+                        <local:MyCheckBox Margin="30,0,0,0">
+                            <local:MyCheckBox.Tag>
+                                <local:ExportOption 
+                                Title="InstanceExport.OptionPersonal"
+                                Description="InstanceExport.OptionPersonalTip"
+                                Rules="hotbar.nbt|command_history.txt"
+                                DefaultChecked="False" />
+                            </local:MyCheckBox.Tag>
+                        </local:MyCheckBox>
+                        <local:MyCheckBox Margin="30,0,0,0">
+                            <local:MyCheckBox.Tag>
+                                <local:ExportOption 
+                                 Title="InstanceExport.OptionOptiFine"
+                                 Rules="optionsof.txt|optionsshaders.txt"
+                                 DefaultChecked="True"
+                                 RequireOptiFine="True" />
+                            </local:MyCheckBox.Tag>
+                        </local:MyCheckBox>
+                        <local:MyCheckBox x:Name="CheckOptionsMod">
+                            <local:MyCheckBox.Tag>
+                                <local:ExportOption 
+                                Title="InstanceExport.OptionMod"
+                                Description="InstanceExport.OptionModTip"
+                                Rules="mods/|!mods/*.disabled|!mods/*.old|!mods/.connector/|coremods/|lib/"
+                                DefaultChecked="True"
+                                RequireModLoader="True" />
+                            </local:MyCheckBox.Tag>
+                        </local:MyCheckBox>
+                        <StackPanel Margin="30,0,0,0"
+                                Visibility="{Binding Checked, ElementName=CheckOptionsMod, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <local:MyCheckBox>
+                                <local:MyCheckBox.Tag>
+                                    <local:ExportOption 
+                                Title="InstanceExport.OptionModDisabled"
+                                Rules="mods/*.disabled|mods/*.old" />
+                                </local:MyCheckBox.Tag>
+                            </local:MyCheckBox>
+                            <local:MyCheckBox>
+                                <local:MyCheckBox.Tag>
+                                    <local:ExportOption 
+                                Title="InstanceExport.OptionData"
+                                Description="InstanceExport.OptionDataTip"
+                                Rules="hotai/|bansoukou/|addons/|multiblocked/|modpack-update-checker/|global_packs/|global_resource_packs/|global_data_packs/|optional_data_packs/|moonlight-global-datapacks/|maps/|icon.png|mods-resourcepacks/|matmos/|resource_assorts/|resource_assorts.json|patchouli_books/|datapacks/|kubejs*/|!kubejs*/probe/|!kubejs*/exported/|!kubejs*/jsconfig.json|!kubejs*/README.txt|openloader/|worldshape/|resources/|scripts/|structures/|fontfiles/|oresources/|packmenu/|craftpresence/|pointblanks/|template*/|!template*/playerdata/|!template*/stats/"
+                                DefaultChecked="True" />
+                                </local:MyCheckBox.Tag>
+                            </local:MyCheckBox>
+                            <local:MyCheckBox>
+                                <local:MyCheckBox.Tag>
+                                    <local:ExportOption 
+                                Title="InstanceExport.OptionModConfig"
+                                Rules="config/|!config/jei/world/|!config/worldedit/|config/worldedit/worldedit.properties|!config/spark/|config/spark/config.json|defaultconfigs/|journeymap/config/|journeymap/server/|TrashSlotSaveState.json|customfov.txt|gg.essential.mod/|essential/|!essential/*/|!essential/*.jar*|!essential/screenshot-checksum-caches.json|!essential/microsoft_accounts.json|paragliderSettings.nbt|local/client_config.json|local/ftbl.json|local/client/sidebar_buttons.json|local/client/ftbutilities.cfg|local/client/ftblib.cfg|local/client/xencraft.cfg|liteloader.properties|default_reference.xml|CustomSkinLoader/CustomSkinLoader.json|!config/tacz/custom"
+                                DefaultChecked="True" />
+                                </local:MyCheckBox.Tag>
+                            </local:MyCheckBox>
+                            <local:MyCheckBox>
+                                <local:MyCheckBox.Tag>
+                                    <local:ExportOption 
+                                Title="InstanceExport.OptionTacz"
+                                Rules="tacz/|config/tacz/custom/"
+                                DefaultChecked="True" />
+                                </local:MyCheckBox.Tag>
+                            </local:MyCheckBox>
+                            <local:MyCheckBox>
+                                <local:MyCheckBox.Tag>
+                                    <local:ExportOption 
+                                Title="InstanceExport.OptionImmersive"
+                                Rules="immersive_paintings/"
+                                DefaultChecked="True" />
+                                </local:MyCheckBox.Tag>
+                            </local:MyCheckBox>
+                            <local:MyCheckBox>
+                                <local:MyCheckBox.Tag>
+                                    <local:ExportOption 
+                                Title="InstanceExport.OptionMap"
+                                Description="InstanceExport.OptionMapTip"
+                                Rules="journeymap/data/|xaero/|XaeroWaypoints/|XaeroWorldMap/"
+                                DefaultChecked="False" />
+                                </local:MyCheckBox.Tag>
+                            </local:MyCheckBox>
+                            <local:MyCheckBox>
+                                <local:MyCheckBox.Tag>
+                                    <local:ExportOption 
+                                Title="InstanceExport.OptionJei"
+                                Description="InstanceExport.OptionJeiTip"
+                                Rules="config/jei/world/"
+                                DefaultChecked="False" />
+                                </local:MyCheckBox.Tag>
+                            </local:MyCheckBox>
+                            <local:MyCheckBox>
+                                <local:MyCheckBox.Tag>
+                                    <local:ExportOption 
+                                Title="InstanceExport.OptionEmi"
+                                Description="InstanceExport.OptionEmiTip"
+                                Rules="emi.json"
+                                DefaultChecked="False" />
+                                </local:MyCheckBox.Tag>
+                            </local:MyCheckBox>
+                            <local:MyCheckBox>
+                                <local:MyCheckBox.Tag>
+                                    <local:ExportOption 
+                                Title="InstanceExport.OptionPatchouli"
+                                Description="InstanceExport.OptionPatchouliTip"
+                                Rules="patchouli_data.json"
+                                DefaultChecked="False" />
+                                </local:MyCheckBox.Tag>
+                            </local:MyCheckBox>
+                        </StackPanel>
+                        <local:MyCheckBox x:Name="CheckOptionsResourcePacks">
+                            <local:MyCheckBox.Tag>
+                                <local:ExportOption 
+                                Title="InstanceExport.OptionResourcePacks"
+                                Description="InstanceExport.OptionResourcePacksTip"
+                                ShowRules="resourcepacks/|texturepacks/"
+                                DefaultChecked="True" />
+                            </local:MyCheckBox.Tag>
+                        </local:MyCheckBox>
+                        <StackPanel Margin="30,0,0,0" x:Name="PanOptionsResourcePacks"
+                                Visibility="{Binding Checked, ElementName=CheckOptionsResourcePacks, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        </StackPanel>
+                        <local:MyCheckBox x:Name="CheckOptionsShaderPacks">
+                            <local:MyCheckBox.Tag>
+                                <local:ExportOption 
+                                Title="InstanceExport.OptionShaderPacks"
+                                ShowRules="shaderpacks/"
+                                DefaultChecked="True"
+                                RequireModLoaderOrOptiFine="True" />
+                            </local:MyCheckBox.Tag>
+                        </local:MyCheckBox>
+                        <StackPanel Margin="30,0,0,0"
+                                Visibility="{Binding Checked, ElementName=CheckOptionsShaderPacks, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <local:MyCheckBox x:Name="CheckOptionsShaderPackSettings">
+                                <local:MyCheckBox.Tag>
+                                    <local:ExportOption
+                                Title="InstanceExport.OptionShaderPackSettings"
+                                Description="InstanceExport.OptionShaderPackSettingsTip"
+                                ShowRules="shaderpacks/*.txt"
+                                DefaultChecked="True" />
+                                </local:MyCheckBox.Tag>
+                            </local:MyCheckBox>
+                        </StackPanel>
+                        <StackPanel Margin="30,0,0,0" x:Name="PanOptionsShaderPacks"
+                                Visibility="{Binding Checked, ElementName=CheckOptionsShaderPacks, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        </StackPanel>
+                        <local:MyCheckBox>
+                            <local:MyCheckBox.Tag>
+                                <local:ExportOption 
+                                Title="InstanceExport.OptionScreenshots"
+                                Rules="screenshots/"
+                                DefaultChecked="False" />
+                            </local:MyCheckBox.Tag>
+                        </local:MyCheckBox>
+                        <local:MyCheckBox>
+                            <local:MyCheckBox.Tag>
+                                <local:ExportOption 
+                                Title="InstanceExport.OptionSchematics"
+                                Description="InstanceExport.OptionSchematicsTip"
+                                Rules="schematics/"
+                                DefaultChecked="False" />
+                            </local:MyCheckBox.Tag>
+                        </local:MyCheckBox>
+                        <local:MyCheckBox>
+                            <local:MyCheckBox.Tag>
+                                <local:ExportOption 
+                                Title="InstanceExport.OptionReplay"
+                                Description="InstanceExport.OptionReplayTip"
+                                Rules="replay_recordings/|replay_videos/"
+                                RequireModLoader="True"
+                                DefaultChecked="False" />
+                            </local:MyCheckBox.Tag>
+                        </local:MyCheckBox>
+                        <local:MyCheckBox x:Name="CheckOptionsSaves">
+                            <local:MyCheckBox.Tag>
+                                <local:ExportOption 
+                                Title="InstanceExport.OptionSaves"
+                                Description="InstanceExport.OptionSavesTip"
+                                ShowRules="saves/"
+                                DefaultChecked="False" />
+                            </local:MyCheckBox.Tag>
+                        </local:MyCheckBox>
+                        <StackPanel Margin="30,0,0,0" x:Name="PanOptionsSaves"
+                                Visibility="{Binding Checked, ElementName=CheckOptionsSaves, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        </StackPanel>
+                        <local:MyCheckBox>
+                            <local:MyCheckBox.Tag>
+                                <local:ExportOption 
+                                Title="InstanceExport.OptionLicence"
+                                Description="InstanceExport.OptionLicenceTip"
+                                Rules="LICEN*"
+                                DefaultChecked="True" />
+                            </local:MyCheckBox.Tag>
+                        </local:MyCheckBox>
+                        <local:MyCheckBox>
+                            <local:MyCheckBox.Tag>
+                                <local:ExportOption 
+                                Title="InstanceExport.OptionServers"
+                                Rules="servers.dat"
+                                DefaultChecked="False" />
+                            </local:MyCheckBox.Tag>
+                        </local:MyCheckBox>
+                        <local:MyCheckBox x:Name="CheckOptionsJava">
+                            <local:MyCheckBox.Tag>
+                                <local:ExportOption 
+                                Title="InstanceExport.OptionJava"
+                                DefaultChecked="True" />
+                            </local:MyCheckBox.Tag>
+                        </local:MyCheckBox>
+                        <local:MyCheckBox x:Name="CheckOptionsPcl">
+                            <local:MyCheckBox.Tag>
+                                <local:ExportOption 
+                                Title="InstanceExport.OptionPcl"
+                                Description="InstanceExport.OptionPclTip"
+                                DefaultChecked="True" />
+                            </local:MyCheckBox.Tag>
+                        </local:MyCheckBox>
+                        <StackPanel Margin="30,0,0,0"
+                                Visibility="{Binding Checked, ElementName=CheckOptionsPcl, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <local:MyCheckBox x:Name="CheckOptionsPclCustom">
+                                <local:MyCheckBox.Tag>
+                                    <local:ExportOption 
+                                Title="InstanceExport.OptionPclCustom"
+                                Description="InstanceExport.OptionPclCustomTip"
+                                DefaultChecked="True" />
+                                </local:MyCheckBox.Tag>
+                            </local:MyCheckBox>
+                        </StackPanel>
+                    </StackPanel>
+                </local:MyCard>
+                <local:MyCard Title="{DynamicResource InstanceExport.TitleAdvanced}" Margin="0,0,0,15" CanSwap="True" IsSwapped="True">
+                    <StackPanel Margin="25,37,23,20">
+                        <local:MyHint Text="{DynamicResource InstanceExport.HintInclude}"
+                                      Theme="Yellow" Margin="0,2,0,8" Visibility="{Binding Checked, ElementName=CheckAdvancedInclude, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <local:MyCheckBox Text="{DynamicResource InstanceExport.CheckInclude}" x:Name="CheckAdvancedInclude"
+                                          ToolTip="{DynamicResource InstanceExport.CheckIncludeTip}" />
+                        <local:MyCheckBox Text="{DynamicResource InstanceExport.CheckModrinth}" x:Name="CheckAdvancedModrinth"
+                                          ToolTip="{DynamicResource InstanceExport.CheckModrinthTip}" />
+                        <local:MyHint Theme="Yellow" x:Name="HintModrinthFormat" Margin="26,2,0,2"
+                                      Text="{DynamicResource InstanceExport.HintModrinthFormat}" />
+                        <local:MyHint Theme="Blue" RelativeSetup="HintExportConfig" CanClose="True" Margin="0,20,0,2"
+                                      Text="{DynamicResource InstanceExport.HintExportConfig}" />
+                        <Grid Height="35" Margin="0,12,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                            </Grid.ColumnDefinitions>
+                            <local:MyButton Grid.Column="0" x:Name="BtnAdvancedImport" MinWidth="140" Text="{DynamicResource InstanceExport.BtnImport}" Padding="13,0" Margin="0,0,20,0" ColorType="Highlight" />
+                            <local:MyButton Grid.Column="1" x:Name="BtnAdvancedExport" MinWidth="140" Text="{DynamicResource InstanceExport.BtnExportConfig}" Padding="13,0" Margin="0,0,20,0" />
+                            <local:MyButton Grid.Column="2" MinWidth="140" Text="{DynamicResource InstanceExport.BtnHelp}" Padding="13,0" Margin="0,0,20,0" x:Name="BtnAdvancedHelp"
+                                            local:CustomEventService.EventType="打开帮助" />
+                        </Grid>
+                    </StackPanel>
+                </local:MyCard>
+            </StackPanel>
+        </local:MyScrollViewer>
+        <local:MyExtraTextButton HorizontalAlignment="Center" VerticalAlignment="Bottom"
+            x:Name="BtnExport" Text="{DynamicResource InstanceExport.BtnExport}"
+            LogoScale="1.1" Logo="M511 995a128 128 0 0 1-57-13L70 791a126 126 0 0 1-70-113V311a126 126 0 0 1 15-60V248c1-2 3-5 5-8a127 127 0 0 1 49-42L454 13a128 128 0 0 1 112 0l383 190a126 126 0 0 1 72 113v360a126 126 0 0 1-70 115L568 984c-17 7-37 11-57 11z m42-470v370l360-178c14-7 23-21 23-38v-335L554 524zM85 330v347a42 42 0 0 0 23 38l360 178V523L85 330zM135 260l375 189 137-65L286 188 135 260z m245-118l363 197 150-71-365-180a42 42 0 0 0-37 0l-111 53z" />
+    </Grid>
+</local:MyPageRight>
